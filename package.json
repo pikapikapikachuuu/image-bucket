@@ -11,5 +11,14 @@
     "test": "test"
   },
   "author": "pikachu",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.490.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-vue": "^5.2.2"
+  }
 }
