@@ -80,6 +80,5 @@ typings/
 
 # Local files 
 /.vscode
-/test
 /config.json
 /screenshots
