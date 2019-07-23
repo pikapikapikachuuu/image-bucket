@@ -43,7 +43,7 @@ describe('S3 Bucket Lifter', () => {
 
     it('should call AWS.S3.createBucket and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.createBucket('test-bucket')
+      const result = await lifter._createBucket('test-bucket')
 
       td.verify(AWS.S3.prototype.createBucket(td.matchers.anything()), { times: 1 })
 
@@ -60,7 +60,7 @@ describe('S3 Bucket Lifter', () => {
 
     it('should call AWS.S3.deleteBucket and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.deleteBucket('test-bucket')
+      const result = await lifter._deleteBucket('test-bucket')
 
       td.verify(AWS.S3.prototype.deleteBucket(td.matchers.anything()), { times: 1 })
 
@@ -70,14 +70,14 @@ describe('S3 Bucket Lifter', () => {
 
   describe('when putting an object', () => {
     beforeEach(() => {
-      td.when(AWS.S3.prototype.putObject(td.matchers.argThat((args) => Object.keys(args).length === 3))).thenReturn({
+      td.when(AWS.S3.prototype.putObject(td.matchers.argThat((args) => Object.keys(args).length >= 3))).thenReturn({
         promise: td.when(td.function()()).thenResolve({ Status: 200 })
       })
     })
 
     it('should call AWS.S3.putObject and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.putObject('test-bucket', 'test-key', 'test-data')
+      const result = await lifter._putObject('test-bucket', 'test-key', 'test-data')
 
       const captor = td.matchers.captor()
       td.verify(AWS.S3.prototype.putObject(captor.capture()), { times: 1 })
@@ -98,7 +98,7 @@ describe('S3 Bucket Lifter', () => {
 
     it('should call AWS.S3.getObject and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.getObject('test-bucket', 'test-key')
+      const result = await lifter._getObject('test-bucket', 'test-key')
 
       const captor = td.matchers.captor()
       td.verify(AWS.S3.prototype.getObject(captor.capture()), { times: 1 })
@@ -119,7 +119,7 @@ describe('S3 Bucket Lifter', () => {
 
     it('should call AWS.S3.deleteObject and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.deleteObject('test-bucket', 'test-key')
+      const result = await lifter._deleteObject('test-bucket', 'test-key')
 
       const captor = td.matchers.captor()
       td.verify(AWS.S3.prototype.deleteObject(captor.capture()), { times: 1 })
@@ -146,7 +146,7 @@ describe('S3 Bucket Lifter', () => {
 
     it('should call AWS.S3.listObjects and resolve', async () => {
       const lifter = new Lifter()
-      const result = await lifter.listObjects('test-bucket')
+      const result = await lifter._listObjects('test-bucket')
 
       const captor = td.matchers.captor()
       td.verify(AWS.S3.prototype.listObjects(captor.capture()))
