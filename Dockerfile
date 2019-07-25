@@ -3,7 +3,7 @@ FROM node:latest
 LABEL name="image-bucket"
 LABEL maintainer="pikachu"
 
-WORKDIR /bucket
+WORKDIR /image-bucket
 
 COPY package*.json ./
 RUN npm install
@@ -11,5 +11,3 @@ RUN npm install
 COPY . .
 
 VOLUME /screenshots
-
-CMD ["node", "index.js", "./screenshots"]
