@@ -151,9 +151,10 @@ describe('S3 Bucket Lifter', () => {
       const captor = td.matchers.captor()
       td.verify(AWS.S3.prototype.listObjects(captor.capture()))
       captor.value.Bucket.should.be.equal('test-bucket')
-      captor.value.Key.should.be.equal('test-key')
+      captor.value.MaxKeys.should.be.equal(1000)
 
-      result.Status.should.be.equal(200)
+      result.should.be.an('array')
+      result.length.should.be.equal(2)
     })
   })
 })
